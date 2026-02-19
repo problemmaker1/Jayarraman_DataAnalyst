@@ -1,0 +1,40 @@
+START TRANSACTION ;
+SET AUTOCOMMIT = OFF;
+USE  e_commerce_project;
+SELECT * FROM PAYMENTS;
+desc payments;
+select * from customers;
+select * from orders;
+select * from products;
+
+#CUSTOMERS TABLE SUCCESSFULLY IMPORTED USING TABLE DATA IMPORT WIZARD 
+-- CHANGING DATA TYPE OF ACCOUNT_CREATED AND LAST_LOGIN TO DATE 
+ALTER TABLE CUSTOMERS 
+MODIFY ACCOUNT_CREATED DATE;
+
+SELECT 
+    *
+FROM
+    customers;
+
+ALTER TABLE CUSTOMERS 
+MODIFY LAST_LOGIN DATE;
+ALTER TABLE ORDERS 
+MODIFY ORDER_DATE DATE;
+
+
+
+#-----Question 1: Update Loyalty points for customer based on age ------------
+
+UPDATE CUSTOMERS 
+SET LOYALTY_POINTS =
+CASE 
+	WHEN AGE < 25 THEN LOYALTY_POINTS +10 
+    WHEN AGE BETWEEN 25 AND 40 THEN LOYALTY_POINTS +20
+	ELSE LOYALTY_POINTS +5
+END; 
+SET SQL_SAFE_UPDATES =0;
+
+
+
+#-----Question 2:  Total order value per country and classify sales category ------------
